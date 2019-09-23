@@ -72,7 +72,7 @@ public class NetworkRequestHandlerTest {
           throw new AssertionError(e);
         }
       }
-    }, stats);
+    });
   }
 
   @Test public void doesNotForceLocalCacheOnlyWithAirplaneModeOffAndRetryCount() throws Exception {
@@ -101,7 +101,7 @@ public class NetworkRequestHandlerTest {
     Action action = TestUtils.mockAction(URI_KEY_1, URI_1);
     PlatformLruCache cache = new PlatformLruCache(0);
     BitmapHunter hunter =
-        new BitmapHunter(picasso, dispatcher, cache, stats, action, networkHandler);
+        new BitmapHunter(picasso, dispatcher, cache, action, networkHandler);
     hunter.retryCount = 0;
     hunter.hunt();
     assertThat(requests.takeFirst().cacheControl().toString()).isEqualTo(CacheControl.FORCE_CACHE.toString());
@@ -111,7 +111,7 @@ public class NetworkRequestHandlerTest {
     Action action = TestUtils.mockAction(URI_KEY_1, URI_1);
     PlatformLruCache cache = new PlatformLruCache(0);
     BitmapHunter hunter =
-        new BitmapHunter(picasso, dispatcher, cache, stats, action, networkHandler);
+        new BitmapHunter(picasso, dispatcher, cache, action, networkHandler);
     assertThat(hunter.shouldRetry(false, null)).isTrue();
     assertThat(hunter.shouldRetry(false, null)).isTrue();
     assertThat(hunter.shouldRetry(false, null)).isFalse();
